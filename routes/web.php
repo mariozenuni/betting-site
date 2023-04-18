@@ -5,6 +5,7 @@ use App\Http\Controllers\Auth\Admin\AdminLoginController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\RolesController;
 use App\Http\Controllers\Auth\Admin\AdminRegisterController;
+use App\Http\Controllers\Auth\Admin\GamesController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -34,6 +35,9 @@ Route::post('admin/login', [AdminLoginController::class,'login'])->name('auth.ad
 
 Route::prefix('admin')->middleware(['auth','isAdmin'])->group(function(){
     Route::get('home', [AdminHomeController::class, 'index'])->name('admin.home');
+    
+    Route::resource('games', GamesController::class);
+
     Route::resource('roles', RolesController::class);
 });
 

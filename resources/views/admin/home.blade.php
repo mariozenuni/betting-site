@@ -4,7 +4,9 @@
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-8">
+          <a href="{{ route('games.create')}}" class=" mb-5 btn btn-success">Add Games</a>
             <div class="card">
+          
                 <div class="card-header">{{ __('Dashboard') }}</div>
 
                 <div class="card-body">
