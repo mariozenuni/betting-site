@@ -1,35 +1,28 @@
 <?php
 
-namespace App\Http\Controllers\Auth;
+namespace App\Http\Controllers\Auth\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Providers\RouteServiceProvider;
+use App\Http\Requests\CreateAdminUserRequest;
+//use App\Providers\RouteServiceProvider;
+use App\Providers\AdminRouteServiceProvider;
 use App\Models\User;
-use Illuminate\Foundation\Auth\RegistersUsers;
+use Illuminate\Foundation\Auth\RegistersAdmin;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
-class RegisterController extends Controller
+class AdminRegisterController extends Controller
 {
-    /*
-    |--------------------------------------------------------------------------
-    | Register Controller
-    |--------------------------------------------------------------------------
-    |
-    | This controller handles the registration of new users as well as their
-    | validation and creation. By default this controller uses a trait to
-    | provide this functionality without requiring any additional code.
-    |
-    */
-
-    use RegistersUsers;
-
+    use RegistersAdmin;
+  
     /**
      * Where to redirect users after registration.
      *
      * @var string
      */
-    protected $redirectTo = RouteServiceProvider::HOME;
+    protected $redirectTo = AdminRouteServiceProvider::HOME;
+
 
     /**
      * Create a new controller instance.
@@ -40,8 +33,7 @@ class RegisterController extends Controller
     {
         $this->middleware('guest');
     }
-
-    /**
+        /**
      * Get a validator for an incoming registration request.
      *
      * @param  array  $data
@@ -64,17 +56,17 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
+      
         $user  = User::create([
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
         ]);
-        
-            // standard user 
-        $roleIds = [1];
+        //admin 
+        $roleIds = [2];
         $user->roles()->attach($roleIds);
-
-        return $user;
+        
+       return $user;
 
     }
 }

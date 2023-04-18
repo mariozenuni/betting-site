@@ -1,12 +1,13 @@
 <?php
 
-namespace App\Http\Controllers\Auth;
+namespace App\Http\Controllers\Auth\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Providers\RouteServiceProvider;
-use Illuminate\Foundation\Auth\AuthenticatesUsers;
 
-class LoginController extends Controller
+use App\Providers\AdminRouteServiceProvider;
+use Illuminate\Foundation\Auth\AuthenticatesAdmin;
+
+class AdminLoginController extends Controller
 {
     /*
     |--------------------------------------------------------------------------
@@ -19,14 +20,14 @@ class LoginController extends Controller
     |
     */
 
-    use AuthenticatesUsers;
+    use AuthenticatesAdmin;
 
     /**
      * Where to redirect users after login.
      *
      * @var string
      */
-   protected $redirectTo = RouteServiceProvider::HOME;
+    protected $redirectTo = AdminRouteServiceProvider::HOME;
 
     /**
      * Create a new controller instance.
@@ -37,5 +38,6 @@ class LoginController extends Controller
     {
         $this->middleware('guest')->except('logout');
     }
+
 
 }

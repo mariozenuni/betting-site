@@ -15,10 +15,10 @@ class RoleSeeder extends Seeder
     {
          
     Role::factory(1)->create([
-        'role' => 'standard'     
+        'name' => 'standard'     
      ]);
      Role::factory(1)->create([
-        'role' => 'admin'     
+        'name' => 'admin'     
      ]);
     }
 }
