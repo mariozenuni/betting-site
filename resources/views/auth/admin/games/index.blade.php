@@ -3,28 +3,47 @@
 @section('content')
 
 <div class="container">
-
-            <table class="table">
+@if(Session::has('success'))
+    <div class="alert alert-success"><span class="glyphicon glyphicon-ok"></span><em> {!! session('success') !!}</em></div>
+@endif
+      <table class="table">
   <thead>
     <tr>
-      <th scope="col">Id</th>
-      <th scope="col">Team 1</th>
-      <th scope="col">Team 2</th>
-      <th scope="col">Bettable</th>
-      <th scope="col">Ended</th>
+      <th>Id</th>
+      <th>Team1</th>
+      <th>Team2</th>
+      <th>Starting Date</th>
+       <th>Starting Time</th>
+      <th>Bettable</th>
+      <th>Ended</th>
+           <th>Status</th>
     </tr>
   </thead>
   <tbody>
+   @foreach($games as $game)
     <tr>
-     
-      @foreach($games as $game)
-         <td>{{ $game->id }}</td> 
-       <td>{{ $game->team1 }}</td>
-       <td>{{ $game->team2 }}</td
-       <td>{{ $game->bettable }}</td
-       <td>{{ $game->ended }}</td
-      @endforeach
+         <td>{{ $game['id']}}</td> 
+         @foreach($game->teams  as $team)
+           <td>{{ $team->name}}</td>
+         @endforeach
+        <td>{{ $game->starting_date }}</td>
+        <td>{{ $game->starting_time }}</td>
+        
+        @if( $game->bettable==1)
+           <td>Yes</td>
+           @else
+           <td>No</td>
+       @endif
+       @if( $game->ended==1)
+           <td>Yes</td>
+             <td><a href="{{ route('results.create') }}" class="btn btn-success btn-sm">Add result<a/></td>
+           @else
+             <td>No</td>
+                 <td>Awaiting Game to finish <a/></td>
+       @endif
+   
     </tr>
+       @endforeach
     
   </tbody>
 </table>

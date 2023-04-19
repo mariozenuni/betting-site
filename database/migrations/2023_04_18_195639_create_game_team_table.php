@@ -11,21 +11,21 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('games', function (Blueprint $table) {
+        Schema::create('game_team', function (Blueprint $table) {
             $table->increments('id');
-            $table->timestamp('starting_date');
-            $table->timeTz('starting_time', 0);
-            $table->boolean('bettable')->default(1);
-            $table->boolean('ended')->default(0);
+            $table->integer('game_id')->unsigned();
+            $table->integer('team_id')->unsigned();
+            $table->foreign('game_id')->references('id')->on('games')->onDelete('cascade');
+            $table->foreign('team_id')->references('id')->on('teams')->onDelete('cascade');
             $table->timestamps();
         });
     }
 
-    /** 
+    /**
      * Reverse the migrations.
      */
     public function down(): void
     {
-        Schema::dropIfExists('games');
+        Schema::dropIfExists('game_team');
     }
 };

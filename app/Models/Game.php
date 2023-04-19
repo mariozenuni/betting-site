@@ -9,6 +9,15 @@ class Game extends Model
 {
     use HasFactory;
 
-    protected $fillable=['team1','team2','bettable','ended'];
+    protected $fillable=['starting_date','starting_time','bettable','ended'];
+
+    public function teams()
+    {
+        return $this->belongsToMany(Team::class);
+    }
+    public function results()
+    {
+        return $this->hasMany(Result::class);
+    }
     
 }

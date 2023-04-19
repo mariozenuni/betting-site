@@ -64,8 +64,10 @@ class AdminRegisterController extends Controller
         ]);
         //admin 
         $roleIds = [2];
-        $user->roles()->attach($roleIds);
-        
+      
+            $user->roles()->attach($roleIds);
+          
+
        return $user;
 
     }

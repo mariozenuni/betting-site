@@ -7,6 +7,9 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Carbon\Carbon;
+use App\Http\Requests\StoreGamesRequest;
+use App\Models\Team;
 class GamesController extends Controller
 {
     /**
@@ -16,14 +19,53 @@ class GamesController extends Controller
     {
         $user=collect(Auth::user()->roles)->first();
 
-        if($user->name!=="admin"){
-         
-            return;
-        }
+         if($user->name!=="admin") {
 
-        $games = DB::table('games')->select('id','team1','team2','bettable','ended')->get();
-     
+            return; 
+         }
+
+         $games = Game::all();
+
       
+
+         foreach( $games  as $game){
+            
+            if($game->starting_time){
+                
+                $start = Carbon::parse($game->starting_time);
+                
+                $ended = Carbon::parse($game->starting_time);
+
+                $startingDate = Carbon::parse($game->starting_date)->toDateString();
+
+               $beattable = $start->addMinutes(30);
+          
+
+               $endedGame = $ended->addHours(2);
+              
+               
+                $current_time  = Carbon::now()->timezone('Europe/Rome');
+                // 
+
+                if($startingDate < Carbon::now()->toDateString()){
+                    $game->bettable = 0;
+                    $game->ended = 1;
+                }
+                
+              if($current_time->toTimeString() > $beattable->toTimeString()){
+        
+                    $game->bettable = 0;
+                         
+              }
+
+              if($current_time->toTimeString() > $endedGame->toTimeString()){
+                    $game->ended = 1;
+                 
+              }
+
+            }
+         }
+
         return view('auth.admin.games.index')->with('games',$games);
     }
 
@@ -32,7 +74,9 @@ class GamesController extends Controller
      */
     public function create()
     {
-        return view('auth.admin.games.create');
+       
+        return view('auth.admin.games.create')->with('teams', Team::all());
+      
     }
 
     /**
@@ -41,23 +85,24 @@ class GamesController extends Controller
     public function store(Request $request)
     {
         
+
         $user=collect(Auth::user()->roles)->first();
 
         if($user->name!=="admin"){
          
             return;
         }
-
-        $games =Game::create([
-            'team1'=>$request->team1,
-            'team2'=>$request->team1,
+    
+        $games = Game::create([
+            'starting_date'=>$request->starting_date,
+            'starting_time'=>$request->starting_time,
             'bettable'=>$request->bettable,
             'ended'=>$request->ended,
         ]);
-
-        $games->save();
-        
-        return redirect(route('games.index'))->with('sucesss','Game added successfully');
+            
+        $games->teams()->attach($request->team_id);
+    
+        return redirect(route('games.index'))->with('success','Game added successfully');
 
 
     }
@@ -83,7 +128,7 @@ class GamesController extends Controller
      */
     public function update(Request $request, Game $game)
     {
-        //
+        
     }
 
     /**
@@ -93,4 +138,6 @@ class GamesController extends Controller
     {
         //
     }
+
+   
 }

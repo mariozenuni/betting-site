@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\RolesController;
 use App\Http\Controllers\Auth\Admin\AdminRegisterController;
 use App\Http\Controllers\Auth\Admin\GamesController;
+use App\Http\Controllers\Auth\Admin\ResultsController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -35,9 +36,10 @@ Route::post('admin/login', [AdminLoginController::class,'login'])->name('auth.ad
 
 Route::prefix('admin')->middleware(['auth','isAdmin'])->group(function(){
     Route::get('home', [AdminHomeController::class, 'index'])->name('admin.home');
-    
-    Route::resource('games', GamesController::class);
 
-    Route::resource('roles', RolesController::class);
+    Route::resource('games', GamesController::class);
+    Route::get('results/create',[ResultsController::class,'create'])->name('results.create');
+    Route::post('results/store',[ResultsController::class,'store'])->name('results.store');
+    Route::resource('roles', RolesController::class);;
 });
 
