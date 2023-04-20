@@ -60,7 +60,7 @@
           <!--Start ended--> 
                   <div class="mb-3 d-none" >
                  <label for="ended" class="form-label">Ended</label>    
-                    <input  type="number" class="form-control hidden"  name="ended" class="@error('ended') is-invalid @enderror" value="{{ old('ended') ? old('ended'): 0}}">
+                    <input  type="number" class="form-control"  name="ended" class="@error('ended') is-invalid @enderror" value="{{ old('ended') ? old('ended'): 0}}">
                 </div>  
                  @error('ended')
                     <div class="alert alert-danger">{{ $message }}</div>

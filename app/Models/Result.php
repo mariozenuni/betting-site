@@ -9,9 +9,9 @@ class Result extends Model
 {
     use HasFactory;
     
-    protected $fillable=['team_1','team2','game_id'];
+    protected $fillable=['team_1','team_2','game_id'];
 
-    public function results()
+    public function outcomes()
     {
         return $this->belongsToMany(Outcome::class);
     }

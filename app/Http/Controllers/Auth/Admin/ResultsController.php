@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Game;
+use App\Models\Outcome;
 use App\Models\Team;
 
 class ResultsController extends Controller
@@ -36,7 +37,7 @@ class ResultsController extends Controller
 
         return view('auth.admin.results.create')
         ->with('games',  Game::all())
-        ->with('results',Result::all());
+        ->with('outcomes',Outcome::all());
     }
 
     /**
@@ -44,12 +45,17 @@ class ResultsController extends Controller
      */
     public function store(Request $request)
     {
-        
-                $result = Team::create([
-                    'name'=>$request->name,
+     
+                $result = Result::create([
+                    'team_1'=>$request->team1,
+                    'team_2'=>$request->team2,
+                    'game_id'=>$request->game_id,
+
+                 
+                    
                 ]);
 
-                $result->results()->attach($request->result);
+                $result->outcomes()->attach($request->outcome);
 
                 return view('auth.admin.games.index')->with('games',Game::all());
     }

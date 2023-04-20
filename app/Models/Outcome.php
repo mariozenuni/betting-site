@@ -9,7 +9,7 @@ class Outcome extends Model
 {
     use HasFactory;
 
-    public function outcomes(){
+    public function results(){
         return $this->belongsToMany(Result::class);
     }
 }
