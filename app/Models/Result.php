@@ -9,11 +9,11 @@ class Result extends Model
 {
     use HasFactory;
     
-    protected $fillable=['team_1','team_2','game_id'];
+    protected $fillable=['outcome_1','outcome_2','game_id'];
 
-    public function outcomes()
+    public function teams()
     {
-        return $this->belongsToMany(Outcome::class);
+        return $this->belongsToMany(Team::class);
     }
     public function result()
     {

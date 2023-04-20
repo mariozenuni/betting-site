@@ -14,7 +14,7 @@
     </div>
   <div class="mb-3">
 
-  <select class="form-select" aria-label="Default select example" name="team1">
+  <select class="form-select" aria-label="Default select example" name="team[]">
   <option  >Open this select menu</option>
   @foreach($games as $game)
   
@@ -28,7 +28,7 @@
 
 
 <div class="mb-3">
-  <select class="form-select" aria-label="Default select example" name="outcome[]">
+  <select class="form-select" aria-label="Default select example" name="outcome_1">
   <option >Open this select menu</option>
 
   @foreach($outcomes as $outcome)
@@ -39,7 +39,7 @@
 </select>
 </div>
   <div class="mb-3 ">
-  <select class="form-select" aria-label="Default select example" name="team2">
+  <select class="form-select" aria-label="Default select example" name="team[]">
   <option>Open this select menu</option>
   @foreach($games as $game)
             @foreach($game->teams as $team)
@@ -51,7 +51,7 @@
 </select>
 </div>
 <div class="mb-3">
-  <select class="form-select" aria-label="Default select example" name="outcome[]">
+  <select class="form-select" aria-label="Default select example" name="outcome_2">
   <option >Open this select menu</option>
   @foreach($outcomes as $outcome)
         <option value="{{  $outcome->id}}">{{$outcome->name}}</option>

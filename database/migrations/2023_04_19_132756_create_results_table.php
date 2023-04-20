@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('results', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('team_1');
-            $table->string('team_2');
+            $table->string('outcome_1');
+            $table->string('outcome_2');
             $table->integer('game_id')->unsigned();
             $table->foreign('game_id')->references('id')->on('games')->onDelete('cascade');
             $table->timestamps();

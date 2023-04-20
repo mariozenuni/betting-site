@@ -45,17 +45,18 @@ class ResultsController extends Controller
      */
     public function store(Request $request)
     {
+      
      
                 $result = Result::create([
-                    'team_1'=>$request->team1,
-                    'team_2'=>$request->team2,
+                    'outcome_1'=>$request->outcome_1,
+                    'outcome_2'=>$request->outcome_2,
                     'game_id'=>$request->game_id,
 
                  
                     
                 ]);
 
-                $result->outcomes()->attach($request->outcome);
+                $result->teams()->attach($request->team);
 
                 return view('auth.admin.games.index')->with('games',Game::all());
     }
