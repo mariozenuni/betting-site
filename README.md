@@ -91,5 +91,7 @@ I have created two  tasks that  will run every 30 minutes and 2 h  to define a g
 
 php artisan schedule:run to run it --> to quickly see the result you need to run it every minutes (both the comands are ready to be tested)
 
+After you will see a add a reult button 
+
 
 
