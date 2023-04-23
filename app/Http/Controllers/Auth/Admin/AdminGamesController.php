@@ -6,65 +6,21 @@ use App\Models\Game;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
 use App\Http\Requests\StoreGamesRequest;
 use App\Models\Team;
-class GamesController extends Controller
+use App\Models\Result;
+
+class AdminGamesController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $user=collect(Auth::user()->roles)->first();
-
-         if($user->name!=="admin") {
-
-            return; 
-         }
-
+    
          $games = Game::all();
-
-      
-
-         foreach( $games  as $game){
-            
-            if($game->starting_time){
-                
-                $start = Carbon::parse($game->starting_time);
-                
-                $ended = Carbon::parse($game->starting_time);
-
-                $startingDate = Carbon::parse($game->starting_date)->toDateString();
-
-               $beattable = $start->addMinutes(30);
-          
-
-               $endedGame = $ended->addHours(2);
-              
-               
-                $current_time  = Carbon::now()->timezone('Europe/Rome');
-                // 
-
-                if($startingDate < Carbon::now()->toDateString()){
-                    $game->bettable = 0;
-                    $game->ended = 1;
-                }
-                
-              if($current_time->toTimeString() > $beattable->toTimeString()){
-        
-                    $game->bettable = 0;
-                         
-              }
-
-              if($current_time->toTimeString() > $endedGame->toTimeString()){
-                    $game->ended = 1;
-                 
-              }
-
-            }
-         }
+       
 
         return view('auth.admin.games.index')->with('games',$games);
     }
@@ -82,24 +38,19 @@ class GamesController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(StoreGamesRequest $request)
     {
         
-
-        $user=collect(Auth::user()->roles)->first();
-
-        if($user->name!=="admin"){
-         
-            return;
-        }
-    
         $games = Game::create([
             'starting_date'=>$request->starting_date,
             'starting_time'=>$request->starting_time,
             'bettable'=>$request->bettable,
             'ended'=>$request->ended,
         ]);
-            
+        if(!((int) $request->team_id[0])||!((int) $request->team_id[1])){
+            return redirect(route('games.create'))->with('error','Please select a Team');
+        }
+
         $games->teams()->attach($request->team_id);
     
         return redirect(route('games.index'))->with('success','Game added successfully');

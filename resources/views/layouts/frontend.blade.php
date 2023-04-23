@@ -71,10 +71,36 @@
                 </div>
             </div>
         </nav>
+                    @if(Auth::user())
+                  <div class="row mt-5">
+                    <div class="col-md-4">
+                    <ul class="list-group">
+                     <li class="list-group-item">
+                            
+                                <a href="{{route('home')}}">Home</a>
+                            
+                            </li>   
+                       @if(Auth::user()->role==1)
+                            <li class="list-group-item mt-3">
+                            
+                                <a href="{{route('games.index')}}">Games</a>
+                            
+                            </li>      
+                         @endif         
+                    </ul>
+                    
+                    </div>
 
-        <main class="py-4">
-            @yield('content')
-        </main>
-    </div>
+                    @endif
+
+                         <div class="col-md-8">
+                         
+                                 @yield('content')
+                         
+                         </div>                 
+                      </div>
+                </div>
+            
+    
 </body>
 </html>

@@ -11,12 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('result_team', function (Blueprint $table) {
+        Schema::create('outcome_result', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('result_id')->unsigned();
-            $table->integer('team_id')->unsigned();
+            $table->integer('outcome_id')->unsigned();
             $table->foreign('result_id')->references('id')->on('results') ->onDelete('cascade');
-            $table->foreign('team_id')->references('id')->on('teams') ->onDelete('cascade');
+            $table->foreign('outcome_id')->references('id')->on('outcomes') ->onDelete('cascade');
             $table->timestamps();
         });
     }
@@ -26,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('result_team');
+        Schema::dropIfExists('outcome_result');
     }
 };

@@ -9,56 +9,48 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\Game;
 use App\Models\Outcome;
 use App\Models\Team;
-
-class ResultsController extends Controller
+use App\Http\Requests\StoreResultRequest;
+class AdminResultsController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        //
+        // results list to be created
     }
 
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create($gameId)
 
     {
-        $user=collect(Auth::user()->roles)->first();
-
-        if($user->name!=="admin") {
-
-           return; 
-        }
-
- 
-
+           
         return view('auth.admin.results.create')
-        ->with('games',  Game::all())
+        ->with('games',  Game::find($gameId)->teams)
         ->with('outcomes',Outcome::all());
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(StoreResultRequest $request)
     {
+        if(empty($request->team_id) && empty($request->outcome_id)){
+            return false;
+        }
       
-     
+  
                 $result = Result::create([
-                    'outcome_1'=>$request->outcome_1,
-                    'outcome_2'=>$request->outcome_2,
-                    'game_id'=>$request->game_id,
-
-                 
-                    
+                    'game_id'=>$request->game_id, 
+                    'team_id'=>$request->team_id, 
                 ]);
 
-                $result->teams()->attach($request->team);
 
-                return view('auth.admin.games.index')->with('games',Game::all());
+                $result->outcomes()->attach($request->outcome_id);
+
+                return redirect(Route('home'))->with('success','Result added successfully');
     }
 
     /**

@@ -6,7 +6,7 @@ use Closure;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Illuminate\Support\Facades\Auth;
-class Admin
+class AdminMiddleware
 
 {
     /**
@@ -17,13 +17,12 @@ class Admin
     public function handle(Request $request, Closure $next): Response
     {
     
-        $user = collect(Auth::user()->roles)->first();
-
-           if(Auth::user()&& $user->name == "admin"){
+           if(Auth::user()->role == 1){
                 return $next($request);
             
             }
-              return redirect(route('admin.register'))->with('error','You have not admin access');
+            
+              return redirect(route('home'));
 
             }
 

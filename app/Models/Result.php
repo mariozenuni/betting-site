@@ -9,14 +9,19 @@ class Result extends Model
 {
     use HasFactory;
     
-    protected $fillable=['outcome_1','outcome_2','game_id'];
+    protected $fillable=['team_id','game_id'];
 
-    public function teams()
+    public function team()
     {
-        return $this->belongsToMany(Team::class);
+        return $this->belongsTo(Team::class);
     }
-    public function result()
+    public function game()
     {
         return $this->belongsTo(Game::class);
+    }
+    
+    public function outcomes()
+    {
+        return $this->belongsToMany(Outcome::class);
     }
 }

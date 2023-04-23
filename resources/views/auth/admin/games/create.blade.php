@@ -3,6 +3,9 @@
 @section('content')
 
 <div class="container">  
+@if(Session::has('error'))
+    <div class="alert alert-danger"><span class="glyphicon glyphicon-ok"></span><em> {!! session('error') !!}</em></div>
+@endif
       <form  method="POST" action="{{ route('games.store') }}">
             @csrf
               <!--Start Team1-->  
@@ -15,6 +18,9 @@
   @endforeach
 
 </select>
+   @error('team_id')
+                    <div class="alert alert-danger">{{ $message }}</div>
+      @enderror
 </div>
   
         <div class="mb-3">
@@ -25,6 +31,9 @@
   @endforeach
 
 </select>
+      @error('team_id')
+                    <div class="alert alert-danger">{{ $message }}</div>
+      @enderror
 </div>
            <!--Start starting_date--> 
             <div class="mb-3">
