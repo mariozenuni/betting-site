@@ -22,7 +22,7 @@ class StoreResultRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'team_id'=>'required|unique:results,team_id'
+            'team_id'=>'required'
         ];
     }
 }

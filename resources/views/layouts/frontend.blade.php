@@ -71,27 +71,42 @@
                 </div>
             </div>
         </nav>
-                    @if(Auth::user())
+                  @if(Auth::user())
                   <div class="row mt-5">
                     <div class="col-md-4">
                     <ul class="list-group">
+                      
                      <li class="list-group-item">
-                            
                                 <a href="{{route('home')}}">Home</a>
-                            
                             </li>   
+                       
+
+                       @if(!empty(Auth::user()->role==0))
+                            <li class="list-group-item mt-3">
+                            
+                                <a href="{{ route('users.index')}}">User List</a>
+                            
+                            </li>  
+                              <li class="list-group-item mt-3">
+                            
+                                <a href="{{ route('users.bettables') }}">Bettable Games</a>
+                            
+                            </li>    
+                            @endif  
+                   
                        @if(Auth::user()->role==1)
                             <li class="list-group-item mt-3">
                             
                                 <a href="{{route('games.index')}}">Games</a>
                             
                             </li>      
-                         @endif         
-                    </ul>
+                         @endif   
                     
-                    </div>
-
+                    </ul>
                     @endif
+                </div>
+
+              
 
                          <div class="col-md-8">
                          
