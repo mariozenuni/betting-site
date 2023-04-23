@@ -10,9 +10,20 @@ class Kernel extends ConsoleKernel
     /**
      * Define the application's command schedule.
      */
+
+     protected $commands =[
+        Commands\UpdateBettableGameTable::class,
+        Commands\UpdateEndedGameTable::class
+     ];
     protected function schedule(Schedule $schedule): void
     {
-        // $schedule->command('inspire')->hourly();
+        // $schedule->command('tableBettableGame:cron')->everyThirtyMinutes();
+        // $schedule->command('tableEndedGame:cron')->everyTwoHours();
+        
+        //just for testing pupuses; php artisan schedule:run  
+        $schedule->command('tableBettableGame:cron')->everyMinute();
+        $schedule->command('tableEndedGame:cron')->everyMinute();
+
     }
 
     /**
