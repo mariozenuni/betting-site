@@ -64,3 +64,30 @@ If you discover a security vulnerability within Laravel, please send an e-mail t
 ## License
 
 The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+
+# Docker 
+
+You need to run the below command to create the containers
+
+docker-compose build and it has been created docker-compose  up
+
+
+# Admin 
+I decided to siplify the admin adding the role attribute on the user table.
+Once creatting an admin user and a standard one then for the admin user you need to run the below query 
+
+0 = standard user
+1 = admin 
+
+Before runnig it you need to find all the user by SELECT * FROM betting_site.users and the update the its related id with 
+
+UPDATE users
+SET role = 1   
+WHERE id=1 ;
+
+# Bettable and ended games
+
+I have created two  tasks that  will run every 30 minutes and 2 h  to define a game not bettable and ended
+
+
+
