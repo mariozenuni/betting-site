@@ -89,5 +89,7 @@ WHERE id=1 ;
 
 I have created two  tasks that  will run every 30 minutes and 2 h  to define a game not bettable and ended
 
+php artisan schedule:run to run it --> to quickly see the result you need to run it every minutes (both the comands are ready to be tested)
+
 
 
